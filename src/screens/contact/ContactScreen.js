@@ -84,6 +84,9 @@ const ContactScreen = ({ history, match }) => {
         filename: 'Contacts.csv'
     };
     
+    const expData = (data) => {
+        return data.map(x => ({ id: x.id, name: x.name, phone: x.phone, email: x.email }));
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -286,7 +289,7 @@ const ContactScreen = ({ history, match }) => {
                             </Link>
 
                              {/* <CSVLink {...csvReport} className="btn btn-primary btn-lg btn-mdf">Export</CSVLink> */}
-                             <CSVLink data={contacts} headers={headersCSV} filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink>
+                             <CSVLink data={expData(contacts)} headers={headersCSV} filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink>
                         </div>
                     </div>
 

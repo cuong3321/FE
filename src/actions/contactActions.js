@@ -233,6 +233,7 @@ export const importContact = (contacts) => async (dispatch, getState) => {
 
         if (data) {
             alert('import success');
+            window.location.href = "/contact";
         }
     } catch (error) {
         dispatch({

@@ -153,7 +153,7 @@ export const updateGroup = (group) => async (dispatch, getState) => {
 
         //update group
         const { data } = await axios.put(
-            `/api/groups/${group.id}`,
+            process.env.REACT_APP_BACKEND_URL+`/api/groups/${group.id}`,
             group,
             config
         );
