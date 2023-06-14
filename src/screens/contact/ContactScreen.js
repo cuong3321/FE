@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
-import json2csv from "json2csv";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Select from "../../components/Select";
