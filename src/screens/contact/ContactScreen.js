@@ -85,13 +85,16 @@ const ContactScreen = ({ history, match }) => {
     };
     
     const expData = (inputData) => {
-        var outputData = [];
-        for(var i = 0; i < inputData.length; i++) {
-            var input = inputData[i];
-            outputData.push([input.name,input.phone, input.email]);
+        if (inputData !== undefined) {
+            var outputData = [];
+            for(var i = 0; i < inputData.length; i++) {
+                var input = inputData[i];
+                outputData.push([input.name,input.phone, input.email]);
+            }
+            //console.log(outputData);
+            return outputData;
         }
-        //console.log(outputData);
-        return outputData;
+         
     };
     //console.log(expData(contacts));
     const handleSubmit = (e) => {
