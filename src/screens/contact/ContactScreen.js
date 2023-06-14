@@ -83,21 +83,71 @@ const ContactScreen = ({ history, match }) => {
         headers: headersCSV,
         filename: 'Contacts.csv'
     };
-    
-    const expData = (inputData) => {
-        if (inputData) {
-            var outputData = [];
-            for(var i = 0; i < inputData.length; i++) {
-                var input = inputData[i];
-                outputData.push([input.name,input.phone, input.email]);
-            }
-            //console.log(outputData);
-            return outputData;
-        }
 
-         
+    const AnsweringMachineCsvHeader = [
+        {
+            id: 'name',
+            title: 'name'
+        },
+        {
+            id: 'phone',
+            title: 'phone'
+        },
+        {
+            id: 'email',
+            title: 'email'
+        },
+    ];
+    
+    const exportCSV = () => {
+        exportProcess('answer_phone_report.csv', AnsweringMachineCsvHeader, contacts)
     };
-    //console.log(expData(contacts));
+
+    const exportProcess = (filename='export.csv',headers,  rows) => {
+        const headersRow = headers.reduce((result, {id, title})=>{
+            return {
+                ...result,
+                [id]:title
+            }
+        }, {})
+        var processRow = function (row:any) {
+            var finalVal = '';
+            headers.forEach(({id}, index)=>{
+                let innerValue = row[id] == undefined ? '' : row[id].toString();
+                if (row[id] instanceof Date) {
+                    innerValue = row[id].toLocaleString();
+                };
+                var result = innerValue.replace(/"/g, '""');
+                if (result.search(/("|,|\n)/g) >= 0)
+                    result = '"' + result + '"';
+                if (index > 0)
+                    finalVal += ',';
+                finalVal += result;
+            })
+            
+            return finalVal + '\n';
+        };
+    
+        var csvFile = '';
+        csvFile += processRow(headersRow)
+        for (var i = 0; i < rows.length; i++) {
+            csvFile += processRow(rows[i]);
+        }
+    
+        var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            // Browsers that support HTML5 download attribute
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -299,13 +349,14 @@ const ContactScreen = ({ history, match }) => {
                             </Link>
 
                              {/* <CSVLink {...csvReport} className="btn btn-primary btn-lg btn-mdf">Export</CSVLink> */}
-                             {/* <CSVLink data={expData(contacts)}  filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink> */}
-
-                             {!contacts ? (
-                                ""
-                            ) : (
-                                <CSVLink data={expData(contacts)}  filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink>
-                            )}
+                             {/* <CSVLink data={contacts} headers={headersCSV} filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink> */}
+                             <button
+                                    type="button"
+                                    className="btn btn-primary btn-lg btn-mdf"
+                                    onClick={exportCSV}
+                                >
+                                    Export
+                            </button>
                         </div>
                     </div>
 
