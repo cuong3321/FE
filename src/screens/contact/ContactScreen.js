@@ -85,7 +85,7 @@ const ContactScreen = ({ history, match }) => {
     };
     
     const expData = (inputData) => {
-        if (inputData !== undefined) {
+        if (inputData) {
             var outputData = [];
             for(var i = 0; i < inputData.length; i++) {
                 var input = inputData[i];
@@ -94,6 +94,7 @@ const ContactScreen = ({ history, match }) => {
             //console.log(outputData);
             return outputData;
         }
+
          
     };
     //console.log(expData(contacts));
@@ -298,7 +299,13 @@ const ContactScreen = ({ history, match }) => {
                             </Link>
 
                              {/* <CSVLink {...csvReport} className="btn btn-primary btn-lg btn-mdf">Export</CSVLink> */}
-                             <CSVLink data={expData(contacts)}  filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink>
+                             {/* <CSVLink data={expData(contacts)}  filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink> */}
+
+                             {!contacts ? (
+                                ""
+                            ) : (
+                                <CSVLink data={expData(contacts)}  filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink>
+                            )}
                         </div>
                     </div>
 
