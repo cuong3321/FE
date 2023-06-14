@@ -66,6 +66,7 @@ const ImportContactScreen = ({ history, match }) => {
         const displayRecords = [];
         for (let i = 0; i < csvRows.length; i++) {
             const newRow = csvRows[i].split(',');
+            if (newRow[0] == "") break;
             const aRow = {
                 name: newRow[0].replaceAll('"',''),
                 phone: newRow[1].replaceAll('"',''),

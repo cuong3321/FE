@@ -100,7 +100,7 @@ const ContactScreen = ({ history, match }) => {
     ];
     
     const exportCSV = () => {
-        exportProcess('answer_phone_report.csv', AnsweringMachineCsvHeader, contacts)
+        exportProcess('contacts.csv', AnsweringMachineCsvHeader, contacts)
     };
 
     const exportProcess = (filename='export.csv',headers,  rows) => {

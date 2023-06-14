@@ -9,6 +9,8 @@
         "axios": "^0.21.0",
         "csv-string": "^4.1.1",
         "enzyme": "^3.11.0",
+        "json2csv": "^6.0.0-alpha.2",
+        "jsonexport": "^3.2.0",
         "moxios": "^0.4.0",
         "react": "^16.13.1",
         "react-content-loader": "^5.1.4",
