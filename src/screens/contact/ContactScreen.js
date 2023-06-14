@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
-
+import json2csv from "json2csv";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Select from "../../components/Select";
@@ -84,10 +84,16 @@ const ContactScreen = ({ history, match }) => {
         filename: 'Contacts.csv'
     };
     
-    const expData = (data) => {
-        return data.map(x => ({ id: x.id, name: x.name, phone: x.phone, email: x.email }));
+    const expData = (inputData) => {
+        var outputData = [];
+        for(var i = 0; i < inputData.length; i++) {
+            var input = inputData[i];
+            outputData.push([input.name,input.phone, input.email]);
+        }
+        //console.log(outputData);
+        return outputData;
     };
-
+    //console.log(expData(contacts));
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -289,7 +295,7 @@ const ContactScreen = ({ history, match }) => {
                             </Link>
 
                              {/* <CSVLink {...csvReport} className="btn btn-primary btn-lg btn-mdf">Export</CSVLink> */}
-                             <CSVLink data={expData(contacts)} headers={headersCSV} filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink>
+                             <CSVLink data={expData(contacts)}  filename="contacts.csv" className="btn btn-primary btn-lg btn-mdf">Export</CSVLink>
                         </div>
                     </div>
 
